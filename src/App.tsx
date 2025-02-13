@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 const getQueryParam = (param: string): string | null => {
@@ -16,8 +16,10 @@ const ValentineConfetti: React.FC = () => {
   const name = getQueryParam("name") || null;
   const isFemale = getQueryParam("gender") === "F" || false
   const showForm = !name;
-  const [formName, setFormName] = useState<String>('')
-  const [gender, setGender] = useState<String>('M')
+  const [formName, setFormName] = useState<string>('')
+  const [gender, setGender] = useState<string>('M')
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  
   useEffect(() => {
     const initialHearts = Array.from({ length: 100 }, (_, i) => ({
       id: i,
@@ -32,7 +34,8 @@ const ValentineConfetti: React.FC = () => {
     e.preventDefault();
     const url = `${window.location.origin}/?name=${formName}&gender=${gender}`;
     navigator.clipboard.writeText(url);
-    alert("Link copied! Share it with your loved one ❤️");
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 3000);
   };
 
   return (
@@ -73,7 +76,7 @@ const ValentineConfetti: React.FC = () => {
               </div>
             </div>
             <button type="submit" className="submit-btn">
-              Copy Link
+              نسخ الرابط
             </button>
           </form>
           </>
@@ -81,7 +84,6 @@ const ValentineConfetti: React.FC = () => {
           <div className="card">
             <h1>كل عام و {isFemale? 'انتي' : "انت"} حبي {name}</h1>
             <div className="message">وجودك بحياتي هو أحلى هدية من الدنيا. ❤️🎁</div>
-            
           </div>
         )}
       </div>
@@ -97,6 +99,11 @@ const ValentineConfetti: React.FC = () => {
             />
           ))}
       </div>
+      <div className="message-alert-container">
+        <div className={`message-alert ${showAlert ? 'active' : ''}`}>
+          {gender === 'F'? 'تمام يا حلوة دزيلة الرابط و سلميلنة علية 🌚👍':'تمام يا حلو دزلها الرابط و سلمنة عليها 🌚👍' }
+        </div>
+      </div> 
     </div>
   );
 };

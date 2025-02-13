@@ -105,6 +105,31 @@ body {
   transition: opacity 1s ease-in-out;
 }
 
+.message-alert-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  justify-items: center;
+  margin-bottom: 15px;
+}
+
+.message-alert{
+  background-color: #000000a8;
+  border-radius: 8px;
+  padding: 10px;
+  width: fit-content;
+  opacity: 0;
+  transform: translateY(200%);
+  margin-top: 10px;
+  transition: 0.5s;
+}
+
+.message-alert.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 
 .heart {
   position: absolute;
