@@ -85,6 +85,11 @@ body {
   background-color: #ec407a;
 }
 
+.submit-btn:disabled {
+  background-color: #00000061;
+  cursor: no-drop;
+}
+
 .card {
   position: relative;
   background-color: #ffffffb8;
