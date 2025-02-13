@@ -75,7 +75,7 @@ const ValentineConfetti: React.FC = () => {
                 </label>
               </div>
             </div>
-            <button type="submit" className="submit-btn" disabled={!name || !gender}>
+            <button type="submit" className="submit-btn" disabled={!formName}>
               نسخ الرابط
             </button>
           </form>
