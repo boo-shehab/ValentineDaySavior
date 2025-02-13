@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "./firebase";
 
 const getQueryParam = (param: string): string | null => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -27,6 +29,24 @@ const ValentineConfetti: React.FC = () => {
       duration: Math.random() * 2 + 2 + "s"
     }));
     setHearts(initialHearts);
+    const incrementVisitCount = async () => {
+      const visitRef = doc(db, "stats", "visits");
+
+      try {
+        const visitSnap = await getDoc(visitRef);
+        if (visitSnap.exists()) {
+          await updateDoc(visitRef, {
+            count: visitSnap.data().count + 1,
+          });
+        } else {
+          await setDoc(visitRef, { count: 1 });
+        }
+      } catch (error) {
+        console.error("Error updating visit count:", error);
+      }
+    };
+
+    incrementVisitCount();
   }, []);
 
 
@@ -35,6 +55,25 @@ const ValentineConfetti: React.FC = () => {
     const url = `${window.location.origin}/?name=${formName}&gender=${gender}`;
     navigator.clipboard.writeText(url);
     setShowAlert(true);
+    
+    const incrementVisitCount = async () => {
+      const visitRef = doc(db, "stats", "newNameCount");
+
+      try {
+        const visitSnap = await getDoc(visitRef);
+        if (visitSnap.exists()) {
+          await updateDoc(visitRef, {
+            count: visitSnap.data().count + 1,
+          });
+        } else {
+          await setDoc(visitRef, { count: 1 });
+        }
+      } catch (error) {
+        console.error("Error updating visit count:", error);
+      }
+    };
+
+    incrementVisitCount();
     setTimeout(() => setShowAlert(false), 3000);
   };
 
