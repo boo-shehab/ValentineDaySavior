@@ -52,7 +52,7 @@ const ValentineConfetti: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const url = `${window.location.origin}/?name=${formName}&gender=${gender}`;
+    const url = `${window.location.origin}/?name=${encodeURIComponent(formName)}&gender=${encodeURIComponent(gender)}`;
     navigator.clipboard.writeText(url);
     setShowAlert(true);
     
